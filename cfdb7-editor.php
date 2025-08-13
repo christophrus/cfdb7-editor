@@ -173,7 +173,10 @@ function cfdb7_editor_page() {
             echo '<td>'.esc_html($ts ? date('d.m.Y H:i', $ts) : '').'</td>';
 
             $paid = cfdb7_get_paid_status($entry->form_id);
-            echo '<td>'.($paid ? '✔️' : '❌').'</td>';
+            $paid_class = $paid ? 'cfdb7-paid cfdb7-paid-yes' : 'cfdb7-paid cfdb7-paid-no';
+            echo '<td class="'.$paid_class.'">';
+            echo '<span class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" style="cursor:pointer;">'.($paid ? '✔️' : '❌').'</span>';
+            echo '</td>';
 
             $edit_url = admin_url('admin.php?page=cfdb7-editor&edit=' . intval($entry->form_id));
             echo '<td><a href="'.esc_url($edit_url).'">Bearbeiten</a></td>';
@@ -295,3 +298,48 @@ function cfdb7_frontend_display($atts) {
     return $output;
 }
 add_shortcode('cfdb7_data', 'cfdb7_frontend_display');
+
+add_action('wp_ajax_cfdb7_toggle_paid', function() {
+    if (!current_user_can('manage_options')) {
+        wp_send_json_error('Keine Berechtigung');
+    }
+    $id = intval($_POST['id'] ?? 0);
+    if (!$id) {
+        wp_send_json_error('Ungültige ID');
+    }
+    $current = cfdb7_get_paid_status($id);
+    $new = $current ? 0 : 1;
+    cfdb7_set_paid_status($id, $new);
+    wp_send_json_success(['paid' => $new]);
+});
+
+add_action('admin_footer', function() {
+    ?>
+    <script>
+    jQuery(document).ready(function($){
+        $('.cfdb7-toggle-paid').on('click', function(){
+            var $el = $(this);
+            var id = $el.data('id');
+            $el.css('opacity', '0.5');
+            $.post(ajaxurl, {
+                action: 'cfdb7_toggle_paid',
+                id: id
+            }, function(resp){
+                $el.css('opacity', '1');
+                if(resp.success) {
+                    if(resp.data.paid) {
+                        $el.html('✔️');
+                        $el.closest('td').removeClass('cfdb7-paid-no').addClass('cfdb7-paid-yes');
+                    } else {
+                        $el.html('❌');
+                        $el.closest('td').removeClass('cfdb7-paid-yes').addClass('cfdb7-paid-no');
+                    }
+                } else {
+                    alert('Fehler: ' + resp.data);
+                }
+            });
+        });
+    });
+    </script>
+    <?php
+});
