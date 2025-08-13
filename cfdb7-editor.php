@@ -175,7 +175,7 @@ function cfdb7_editor_page() {
             $paid = cfdb7_get_paid_status($entry->form_id);
             $paid_class = $paid ? 'cfdb7-paid cfdb7-paid-yes' : 'cfdb7-paid cfdb7-paid-no';
             echo '<td class="'.$paid_class.'">';
-            echo '<span class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" style="cursor:pointer;">'.($paid ? '✔️' : '❌').'</span>';
+            echo '<button type="button" class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" title="Klick zum Umschalten" style="cursor:pointer;border:none;background:transparent;font-size:1.3em;padding:4px 10px;border-radius:50%;">'.($paid ? '✔️' : '❌').'</button>';
             echo '</td>';
 
             $edit_url = admin_url('admin.php?page=cfdb7-editor&edit=' . intval($entry->form_id));
@@ -342,4 +342,22 @@ add_action('admin_footer', function() {
     });
     </script>
     <?php
+});
+
+add_action('admin_enqueue_scripts', function() {
+    wp_enqueue_style(
+        'cfdb7-editor-css',
+        plugin_dir_url(__FILE__) . 'cfdb7-editor.css',
+        [],
+        filemtime(__DIR__ . '/cfdb7-editor.css')
+    );
+});
+
+add_action('wp_enqueue_scripts', function() {
+    wp_enqueue_style(
+        'cfdb7-editor-css',
+        plugin_dir_url(__FILE__) . 'cfdb7-editor.css',
+        [],
+        filemtime(__DIR__ . '/cfdb7-editor.css')
+    );
 });

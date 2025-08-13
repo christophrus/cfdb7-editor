@@ -1,0 +1,35 @@
+/* Ergänze in deiner cfdb7-editor.css */
+.cfdb7-toggle-paid {
+  cursor: pointer;
+  border: 1px solid #bbb;
+  background: linear-gradient(180deg, #f8f8f8 0%, #e0e0e0 100%);
+  font-size: 1.1em;
+  padding: 7px 22px;
+  border-radius: 6px;
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  outline: none;
+  color: #333;
+  margin: 0 2px;
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.cfdb7-paid-yes .cfdb7-toggle-paid {
+  background: linear-gradient(180deg, #38d66b 0%, #2ecc40 100%);
+  color: #fff;
+  border-color: #27ae36;
+}
+.cfdb7-paid-no .cfdb7-toggle-paid {
+  background: linear-gradient(180deg, #ff6f61 0%, #ff4136 100%);
+  color: #fff;
+  border-color: #c0392b;
+}
+.cfdb7-toggle-paid:hover,
+.cfdb7-toggle-paid:focus {
+  background: #ffeaa7;
+  color: #222;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+  outline: 2px solid #2ecc40;
+  border-color: #2ecc40;
+}
