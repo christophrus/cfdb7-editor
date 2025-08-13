@@ -68,7 +68,7 @@ function cfdb7_editor_overview() {
             if ($f === 'form_date') {
                 echo '<td>' . esc_html(date('d.m.Y H:i', strtotime($row->form_date))) . '</td>';
             } elseif ($f === 'bezahlt') {
-                echo '<td>' . ($bezahlt ? 'Ja' : 'Nein') . '</td>';
+                echo '<td style="text-align:center;">' . ($bezahlt ? '✓' : '✗') . '</td>';
             } else {
                 $val = isset($data[$f]) ? $data[$f] : '';
                 if (is_array($val)) $val = implode(', ', $val);
@@ -217,12 +217,12 @@ function cfdb7_frontend_display($atts) {
                 $date = strtotime($row->form_date);
                 $value = date('d.m.Y H:i', $date);
             } elseif ($field === 'bezahlt') {
-                $value = $bezahlt ? 'Ja' : 'Nein';
+                $value = $bezahlt ? '✓' : '✗';
             } else {
                 $value = isset($data[$field]) ? $data[$field] : '';
             }
             if (is_array($value)) $value = implode(', ', $value);
-            $output .= '<td>' . esc_html($value) . '</td>';
+            $output .= '<td style="text-align:center;">' . esc_html($value) . '</td>';
         }
         $output .= '</tr>';
     }
