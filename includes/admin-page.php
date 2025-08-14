@@ -114,8 +114,19 @@ function cfdb7_editor_page() {
         }
 
         echo '<h2>Einträge</h2>';
+        echo '<form method="post" id="cfdb7-bulk-form">';
+        wp_nonce_field('cfdb7_bulk_action');
+        echo '<div style="margin-bottom:10px;">';
+        echo '<select name="bulk_action" style="min-width:120px;">';
+        echo '<option value="">Aktion wählen</option>';
+        echo '<option value="delete">Löschen</option>';
+        echo '</select> ';
+        echo '<button type="submit" class="button">Ausführen</button>';
+        echo '</div>';
+
         echo '<table class="widefat fixed striped" style="width:100%;">';
         echo '<thead><tr>';
+        echo '<th style="width:30px;"><input type="checkbox" id="cfdb7-select-all"></th>';
         echo '<th style="width:60px;">ID</th>';
         foreach ($all_fields as $field) {
             echo '<th>'.esc_html($field).'</th>';
@@ -132,6 +143,7 @@ function cfdb7_editor_page() {
             }
 
             echo '<tr>';
+            echo '<td><input type="checkbox" name="bulk_ids[]" value="'.intval($entry->form_id).'"></td>';
             echo '<td>'.intval($entry->form_id).'</td>';
 
             foreach ($all_fields as $field) {
@@ -155,8 +167,21 @@ function cfdb7_editor_page() {
         }
 
         echo '</tbody></table>';
+        echo '</form>';
     } else {
         echo '<p>Keine Einträge gefunden.</p>';
+    }
+
+    if (isset($_POST['bulk_action']) && $_POST['bulk_action'] === 'delete' && !empty($_POST['bulk_ids']) && is_array($_POST['bulk_ids'])) {
+        check_admin_referer('cfdb7_bulk_action');
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'db7_forms';
+        $ids = array_map('intval', $_POST['bulk_ids']);
+        foreach ($ids as $id) {
+            $wpdb->delete($table_name, ['form_id' => $id], ['%d']);
+            delete_option(cfdb7_paid_option_key($id));
+        }
+        echo '<div class="updated"><p>'.count($ids).' Einträge gelöscht.</p></div>';
     }
 
     echo '</div>';

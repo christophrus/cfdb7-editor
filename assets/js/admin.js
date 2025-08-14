@@ -21,4 +21,7 @@ jQuery(document).ready(function($){
             }
         });
     });
+    $('#cfdb7-select-all').on('change', function(){
+        $('input[name="bulk_ids[]"]').prop('checked', $(this).prop('checked'));
+    });
 });
