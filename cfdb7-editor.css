@@ -16,9 +16,9 @@
   letter-spacing: 0.5px;
 }
 .cfdb7-paid-yes .cfdb7-toggle-paid {
-  background: linear-gradient(180deg, #38d66b 0%, #2ecc40 100%);
+  /*background: linear-gradient(180deg, #38d66b 0%, #2ecc40 100%);
   color: #fff;
-  border-color: #27ae36;
+  border-color: #27ae36;*/
 }
 .cfdb7-paid-no .cfdb7-toggle-paid {
   background: linear-gradient(180deg, #ff6f61 0%, #ff4136 100%);
@@ -30,6 +30,6 @@
   background: #ffeaa7;
   color: #222;
   box-shadow: 0 4px 16px rgba(0,0,0,0.16);
-  outline: 2px solid #2ecc40;
+  /*outline: 2px solid #2ecc40;
   border-color: #2ecc40;
 }
