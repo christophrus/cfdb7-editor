@@ -158,7 +158,7 @@ function cfdb7_editor_page() {
             $paid = cfdb7_get_paid_status($entry->form_id);
             $paid_class = $paid ? 'cfdb7-paid cfdb7-paid-yes' : 'cfdb7-paid cfdb7-paid-no';
             echo '<td class="'.$paid_class.'">';
-            echo '<button type="button" class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" title="Klick zum Umschalten">'.($paid ? '&#10008;' : '&#10008;').'</button>';
+            echo '<button type="button" class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" title="Klick zum Umschalten">'.($paid ? '&#10004' : '&#10008;').'</button>';
             echo '</td>';
 
             $edit_url = admin_url('admin.php?page=cfdb7-editor&edit=' . intval($entry->form_id));
