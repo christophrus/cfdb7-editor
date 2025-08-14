@@ -92,7 +92,7 @@ function cfdb7_frontend_display($atts) {
         }
 
         $paid = cfdb7_get_paid_status($row->form_id);
-        $output .= '<td>'.($paid ? '&#10004' : '&#10008;').'</td>';
+        $output .= '<td>'.($paid ? '&#10004;' : '&#10008;').'</td>';
 
         $output .= '</tr>';
     }
