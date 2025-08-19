@@ -56,7 +56,7 @@ function cfdb7_frontend_display($atts) {
     }
     $all_fields[] = 'form_date';
 
-    $output  = '<table border="1" cellpadding="5" style="border-collapse:collapse;width:100%;">';
+    $output  = '<table class="cfdb7-table">';
     $output .= '<thead><tr>';
     $output .= '<th>#</th>';
 
