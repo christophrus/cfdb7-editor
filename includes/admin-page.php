@@ -27,6 +27,7 @@ function cfdb7_editor_page() {
 
     // Zwischenschritt: Formular-IDs auflisten
     $form_ids = $wpdb->get_col("SELECT DISTINCT form_post_id FROM {$table_name} ORDER BY form_post_id ASC");
+    $selected_form_id = isset($_GET['form_id']) ? intval($_GET['form_id']) : 0;
     echo '<form method="get" action="">';
     echo '<input type="hidden" name="page" value="cfdb7-editor">';
     echo '<label for="cfdb7-form-id"><strong>Formular wählen:</strong></label> ';
