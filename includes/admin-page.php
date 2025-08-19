@@ -190,7 +190,7 @@ function cfdb7_editor_page() {
             echo '<button type="button" class="cfdb7-toggle-paid" data-id="'.intval($entry->form_id).'" title="Klick zum Umschalten">'.($paid ? '&#10004;' : '&#10008;').'</button>';
             echo '</td>';
 
-            $edit_url = admin_url('admin.php?page=cfdb7-editor&edit=' . intval($entry->form_id));
+            $edit_url = admin_url('admin.php?page=cfdb7-editor&form_id=' . intval($selected_form_id) . '&edit=' . intval($entry->form_id));
             echo '<td><a href="'.esc_url($edit_url).'">Bearbeiten</a></td>';
             echo '</tr>';
         }
