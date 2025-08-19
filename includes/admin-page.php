@@ -25,6 +25,28 @@ function cfdb7_editor_page() {
 
     echo '<div class="wrap"><h1>CFDB7 Editor</h1>';
 
+    // Zwischenschritt: Formular-IDs auflisten
+    $form_ids = $wpdb->get_col("SELECT DISTINCT form_post_id FROM {$table_name} ORDER BY form_post_id ASC");
+    $selected_form_id = isset($_GET['form_id']) ? intval($_GET['form_id']) : 0;
+
+    echo '<form method="get" action="">';
+    echo '<input type="hidden" name="page" value="cfdb7-editor">';
+    echo '<label for="cfdb7-form-id"><strong>Formular wählen:</strong></label> ';
+    echo '<select name="form_id" id="cfdb7-form-id" style="min-width:120px;">';
+    echo '<option value="">-- Bitte wählen --</option>';
+    foreach ($form_ids as $fid) {
+        echo '<option value="'.intval($fid).'"'.($selected_form_id == $fid ? ' selected' : '').'>Formular-ID: '.intval($fid).'</option>';
+    }
+    echo '</select> ';
+    echo '<button type="submit" class="button">Anzeigen</button>';
+    echo '</form>';
+
+    // Wenn keine Formular-ID gewählt, Übersicht beenden
+    if (!$selected_form_id) {
+        echo '<p>Bitte zuerst ein Formular auswählen.</p></div>';
+        return;
+    }
+
     // Speichern nach Editieren
     if (isset($_POST['cfdb7_save_entry']) && isset($_GET['edit']) && check_admin_referer('cfdb7_edit_entry')) {
         $id = intval($_GET['edit']);
@@ -94,8 +116,13 @@ function cfdb7_editor_page() {
         return;
     }
 
-    // Übersicht (letzte 100 Einträge)
-    $entries = $wpdb->get_results("SELECT * FROM {$table_name} ORDER BY form_date DESC LIMIT 100");
+    // Übersicht (letzte 100 Einträge für gewählte Formular-ID)
+    $entries = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT * FROM {$table_name} WHERE form_post_id = %d ORDER BY form_date DESC LIMIT 100",
+            $selected_form_id
+        )
+    );
 
     if ($entries) {
         $all_fields = [];
