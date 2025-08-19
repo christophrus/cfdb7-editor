@@ -33,3 +33,28 @@
   /*outline: 2px solid #2ecc40;
   border-color: #2ecc40;*/
 }
+.cfdb7-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  font-size: 1em;
+  margin-bottom: 2em;
+}
+.cfdb7-table th, .cfdb7-table td {
+  border: 1px solid #d0d0d0 !important;
+  padding: 8px 12px !important;
+  background: #fafafa;
+  color: #222;
+}
+.cfdb7-table th {
+  background: #f0f4f8;
+  font-weight: bold;
+  color: #222;
+}
+.cfdb7-table tr:nth-child(even) td {
+  background: #f7f7f7;
+}
+.cfdb7-table tr:hover td {
+  background: #ffeaa7;
+}
